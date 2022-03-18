@@ -4,6 +4,8 @@
   "license": "ISC",
   "scripts": {
     "start": "DEBUG='-nodemon*,*' nodemon -r ./src/app.ts",
+    "format": "prettier --write 'src/**/*.{js,ts}'",
+    "lint": "eslint 'src/**/*'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -23,8 +25,14 @@
   },
   "devDependencies": {
     "@types/node": "17.0.21",
+    "@typescript-eslint/eslint-plugin": "5.14.0",
+    "@typescript-eslint/parser": "5.14.0",
     "eslint": "8.10.0",
     "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-json": "3.1.0",
+    "eslint-plugin-no-only-tests": "2.6.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "eslint-plugin-security": "1.4.0",
     "prettier": "2.5.1",
     "nodemon": "2.0.15"
   }

@@ -19,5 +19,6 @@ app.use(logger());
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-// TODO: get port from config
+// TODO: get port from config and fix logging
+// eslint-disable-next-line no-console
 app.listen(3000, () => console.log('started'));
