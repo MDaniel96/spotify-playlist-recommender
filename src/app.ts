@@ -3,14 +3,12 @@ import * as Router from 'koa-router';
 import * as bodyParser from 'koa-bodyparser';
 import * as cors from '@koa/cors';
 import * as logger from 'koa-logger';
+import { controllers } from './controller/controllers';
 
 const app = new Koa();
 const router = new Router();
 
-router.get('/', async (ctx: Koa.Context, next: Koa.Next) => {
-  ctx.body = { message: 'Hello World!' };
-  await next();
-});
+controllers(router);
 
 app.use(bodyParser());
 app.use(cors());
