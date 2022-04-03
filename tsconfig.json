@@ -1,19 +1,4 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
-    "lib": ["ESNext", "ES2020", "ES2019", "ES2018", "ES2017"],
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "moduleResolution": "node",
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strict": true,
-    "alwaysStrict": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true
-  }
+  "extends": "./tsconfig.common.json",
+  "exclude": ["node_modules", "dist" , "config", "migrations", "**/*.spec.ts"]
 }

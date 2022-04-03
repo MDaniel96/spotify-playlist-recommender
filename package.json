@@ -6,7 +6,7 @@
     "start": "DEBUG='-nodemon*,*' nodemon -r ./src/app.ts",
     "format": "prettier --write 'src/**/*.{js,ts}'",
     "lint": "eslint 'src/**/*'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "TS_NODE_PROJECT=tsconfig.test.json mocha --require ts-node/register/transpile-only --reporter dot --exit src/setup.spec.ts 'src/**/*.spec.ts'"
   },
   "dependencies": {
     "@koa/cors": "3.1.0",
@@ -24,16 +24,30 @@
     "typescript": "4.6.2"
   },
   "devDependencies": {
+    "@types/chai": "4.3.0",
+    "@types/chai-subset": "1.3.3",
+    "@types/mocha": "9.1.0",
     "@types/node": "17.0.21",
+    "@types/deep-equal-in-any-order": "1.0.1",
+    "@types/sinon": "10.0.11",
+    "@types/sinon-chai": "3.2.8",
+    "@types/supertest": "2.0.12",
     "@typescript-eslint/eslint-plugin": "5.14.0",
     "@typescript-eslint/parser": "5.14.0",
+    "deep-equal-in-any-order": "1.1.15",
+    "chai": "4.3.6",
+    "chai-subset": "1.6.0",
     "eslint": "8.10.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-json": "3.1.0",
     "eslint-plugin-no-only-tests": "2.6.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-security": "1.4.0",
+    "mocha": "9.2.2",
+    "nodemon": "2.0.15",
     "prettier": "2.5.1",
-    "nodemon": "2.0.15"
+    "sinon": "13.0.1",
+    "sinon-chai": "3.7.0",
+    "supertest": "6.2.2"
   }
 }
