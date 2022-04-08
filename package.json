@@ -3,6 +3,7 @@
   "author": "Daniel Morvai",
   "license": "ISC",
   "scripts": {
+    "all-in": "npm run format && npm run lint && npm run test",
     "start": "DEBUG='-nodemon*,*' nodemon -r ./src/app.ts",
     "format": "prettier --write 'src/**/*.{js,ts}'",
     "lint": "eslint 'src/**/*'",
