@@ -1,9 +1,9 @@
-import { app } from '../../../app';
+import { app } from '../../app';
 import * as request from 'supertest';
 import { expect } from 'chai';
 import { stub } from 'sinon';
-import { PresetRepository } from '../../../repository/preset-repository';
-import { createPreset } from '../../../test-util/test-factories';
+import { PresetRepository } from '../../repository/preset-repository';
+import { createPreset } from '../../test-util/test-factories';
 import { Server } from 'http';
 
 describe('Preset Routes', () => {

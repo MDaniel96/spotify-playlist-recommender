@@ -1,4 +1,4 @@
 import { Route } from '../types';
-import { apiRoutes } from './api/api-routes';
+import { presetRoutes } from './preset/preset-routes';
 
-export const controllerRoutes: Route[] = [...apiRoutes];
+export const controllerRoutes: Route[] = [...presetRoutes];

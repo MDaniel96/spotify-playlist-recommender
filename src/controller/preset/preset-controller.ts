@@ -1,6 +1,6 @@
 import * as Koa from 'koa';
-import { PresetRepository } from '../../../repository/preset-repository';
-import { HttpStatus } from '../../../lib/http-status/http-status';
+import { PresetRepository } from '../../repository/preset-repository';
+import { HttpStatus } from '../../lib/http-status/http-status';
 
 export class PresetController {
   static create(): PresetController {
