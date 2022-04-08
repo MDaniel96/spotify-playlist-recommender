@@ -1,15 +1,21 @@
 import * as Koa from 'koa';
+import { PresetRepository } from '../../../repository/preset-repository';
+import { HttpStatus } from '../../../lib/http-status/http-status';
 
 export class PresetController {
   static create(): PresetController {
-    return new PresetController();
+    return new PresetController(PresetRepository.create());
   }
 
-  constructor() {
+  constructor(private presetRepository: PresetRepository) {
     this.list = this.list.bind(this);
   }
 
   async list(context: Koa.Context): Promise<void> {
-    context.body = { message: 'Hello World' };
+    const userId = Number(context.params.userId);
+    const presets = await this.presetRepository.listByUserId(userId);
+
+    context.status = HttpStatus.OK;
+    context.body = { presets };
   }
 }

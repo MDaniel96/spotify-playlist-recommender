@@ -5,7 +5,7 @@ import * as cors from '@koa/cors';
 import * as logger from 'koa-logger';
 import { controllers } from './controller/controllers';
 
-const app = new Koa();
+export const app = new Koa();
 const router = new Router();
 
 controllers(router);
