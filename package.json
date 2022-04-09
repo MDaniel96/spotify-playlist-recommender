@@ -2,6 +2,9 @@
   "name": "spotify-playlist-recommender",
   "author": "Daniel Morvai",
   "license": "ISC",
+  "engines": {
+    "node": "16.14.0"
+  },
   "scripts": {
     "all-in": "npm run format && npm run lint && npm run test",
     "start": "DEBUG='-nodemon*,*' nodemon -r ./src/app.ts",
