@@ -4,7 +4,7 @@ export type Preset = {
   id: number;
   name: string;
   userId: number;
-  created_at: Date;
+  createdAt: Date;
 };
 
 export type Route = {

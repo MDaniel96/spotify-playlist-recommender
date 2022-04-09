@@ -25,7 +25,7 @@ export const createPreset = (additionalParams: Partial<Preset> = {}): Preset => 
   id: createRandomNumber(),
   name: randomUUID(),
   userId: createRandomNumber(),
-  created_at: new Date(),
+  createdAt: new Date(),
   ...additionalParams
 });
 
