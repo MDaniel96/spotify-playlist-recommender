@@ -19,7 +19,7 @@ app.use(logger());
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-const dbDataSource = new DataSource(dbDataSourceOptions);
+export const dbDataSource = new DataSource(dbDataSourceOptions);
 dbDataSource.initialize().catch(error => console.log(error));
 
 // TODO: get from config
