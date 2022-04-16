@@ -19,7 +19,7 @@
     "prettier/prettier": "error",
     "no-only-tests/no-only-tests": "error",
     "no-unused-expressions": "error",
-    "no-console": "error",
+    "no-console": "off",
     "func-style": ["error", "declaration", { "allowArrowFunctions": true }],
     "operator-linebreak": ["error", "after", { "overrides": { "?": "before", ":": "before" } }],
     "no-empty": ["error", { "allowEmptyCatch": true }],
