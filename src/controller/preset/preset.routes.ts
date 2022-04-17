@@ -1,5 +1,5 @@
 import { Route } from '../../types';
-import { PresetController } from './preset-controller';
+import { PresetController } from './preset.controller';
 
 export const presetRoutes: Route[] = [
   {

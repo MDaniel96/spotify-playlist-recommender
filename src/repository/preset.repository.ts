@@ -1,4 +1,4 @@
-import { PresetEntity } from '../entity/preset-entity';
+import { PresetEntity } from '../entity/preset.entity';
 import { dbDataSource } from '../config/db-data-source';
 import { Repository } from 'typeorm';
 

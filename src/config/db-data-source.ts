@@ -9,7 +9,7 @@ export const dbDataSource = new DataSource({
   username: 'postgres',
   password: 'secret',
   database: 'postgres',
-  entities: ['src/entity/*-entity.ts'],
+  entities: ['src/entity/*.entity.ts'],
   synchronize: true,
   logging: false
 });

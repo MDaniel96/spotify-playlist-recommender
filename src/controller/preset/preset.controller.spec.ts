@@ -1,7 +1,7 @@
-import { PresetController } from './preset-controller';
+import { PresetController } from './preset.controller';
 import { createFakeContext, createPreset, createRandomNumber } from '../../test-util/test-factories';
 import { expect } from 'chai';
-import { PresetRepository } from '../../repository/preset-repository';
+import { PresetRepository } from '../../repository/preset.repository';
 import { stub } from 'sinon';
 
 describe('PresetController', () => {
