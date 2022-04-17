@@ -1,5 +1,5 @@
 import * as Koa from 'koa';
-import { PresetRepository } from '../../repository/preset.repository';
+import { PresetRepository } from '../../repository/preset/preset.repository';
 import { HttpStatus } from '../../lib/http-status/http-status';
 
 export class PresetController {
