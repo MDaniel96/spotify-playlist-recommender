@@ -1,13 +1,15 @@
 import { PresetEntity } from '../entity/preset-entity';
-import { dbDataSource } from '../app';
+import { dbDataSource } from '../config/db-data-source';
+import { Repository } from 'typeorm';
 
 export class PresetRepository {
   static create(): PresetRepository {
-    return new PresetRepository();
+    return new PresetRepository(dbDataSource.getRepository(PresetEntity));
   }
 
+  constructor(private repository: Repository<PresetEntity>) {}
+
   async listByUserId(userId: number): Promise<PresetEntity[]> {
-    const repository = dbDataSource.getRepository(PresetEntity);
-    return await repository.findBy({ userId });
+    return await this.repository.findBy({ userId });
   }
 }

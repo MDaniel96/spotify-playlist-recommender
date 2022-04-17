@@ -4,8 +4,7 @@ import * as bodyParser from 'koa-bodyparser';
 import * as cors from '@koa/cors';
 import * as logger from 'koa-logger';
 import { controllers } from './controller/controllers';
-import { DataSource } from 'typeorm';
-import { dbDataSourceOptions } from './config/db-data-source-options';
+import { dbDataSource } from './config/db-data-source';
 
 export const app = new Koa();
 const router = new Router();
@@ -19,7 +18,6 @@ app.use(logger());
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-export const dbDataSource = new DataSource(dbDataSourceOptions);
 dbDataSource.initialize().catch(error => console.log(error));
 
 // TODO: get from config
