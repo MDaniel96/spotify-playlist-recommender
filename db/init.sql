@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS preset (
     id INT NOT NULL,
-    name VARCHAR(300) NOT NULL,
+    name VARCHAR NOT NULL,
     user_id INT NOT NULL,
     created_at TIMESTAMP NOT NULL,
     PRIMARY KEY (id)
