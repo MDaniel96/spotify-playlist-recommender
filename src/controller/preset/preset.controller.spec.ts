@@ -1,16 +1,16 @@
 import { PresetController } from './preset.controller';
 import { createFakeContext, createPreset, createRandomNumber } from '../../test-util/test-factories';
 import { expect } from 'chai';
-import { PresetRepository } from '../../repository/preset/preset.repository';
 import { stub } from 'sinon';
+import { PresetService } from '../../service/preset/preset.service';
 
 describe('PresetController', () => {
   context('#list', () => {
     it('should give back 200', async () => {
       const context = createFakeContext();
-      const presetRepository = createStubbedPresetRepository();
+      const presetService = createStubbedPresetService();
 
-      await new PresetController(presetRepository).list(context);
+      await new PresetController(presetService).list(context);
 
       expect(context.status).to.eql(200);
     });
@@ -18,9 +18,9 @@ describe('PresetController', () => {
     it('should give back presets', async () => {
       const context = createFakeContext();
       const presets = [createPreset(), createPreset()];
-      const presetRepository = createStubbedPresetRepository(presets);
+      const presetService = createStubbedPresetService(presets);
 
-      await new PresetController(presetRepository).list(context);
+      await new PresetController(presetService).list(context);
 
       expect(context.body).to.eql({ presets });
     });
@@ -29,17 +29,17 @@ describe('PresetController', () => {
       const userId = createRandomNumber();
       const context = createFakeContext({ params: { userId } });
       const presets = [createPreset(), createPreset()];
-      const presetRepository = createStubbedPresetRepository(presets);
+      const presetService = createStubbedPresetService(presets);
 
-      await new PresetController(presetRepository).list(context);
+      await new PresetController(presetService).list(context);
 
-      expect(presetRepository.listByUserId).to.have.been.calledWithExactly(userId);
+      expect(presetService.listByUserId).to.have.been.calledWithExactly(userId);
     });
   });
 });
 
-const createStubbedPresetRepository = (listReturnValue = [createPreset()]): PresetRepository => {
-  const repository = PresetRepository.create();
-  stub(repository, 'listByUserId').resolves(listReturnValue);
-  return repository;
+const createStubbedPresetService = (listReturnValue = [createPreset()]): PresetService => {
+  const service = PresetService.create();
+  stub(service, 'listByUserId').resolves(listReturnValue);
+  return service;
 };
