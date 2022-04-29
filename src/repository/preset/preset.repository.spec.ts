@@ -21,6 +21,15 @@ describe('PresetRepository', () => {
 
       expect(result).to.deep.equal([userPreset, userOtherPreset]);
     });
+
+    it('should give empty list when user id does not match', async () => {
+      const userId = createRandomNumber();
+      await insertToDb(createPreset({ userId: userId + 1 }));
+
+      const result = await PresetRepository.create().listByUserId(userId);
+
+      expect(result).to.deep.equal([]);
+    });
   });
 });
 
