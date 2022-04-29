@@ -25,8 +25,14 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Set up Node.js
+      - name: Determine Node version
+        id: engines
+        run: |
+          echo "##[set-output name=NODE_VERSION;]$(jq -r '.engines.node' package.json)"
+      - name: Set up Node.js ${{ steps.engines.outputs.NODE_VERSION }}
         uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.engines.outputs.NODE_VERSION }}
       - name: Install packages
         run: npm ci
       - name: Lint
