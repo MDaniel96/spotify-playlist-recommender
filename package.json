@@ -6,11 +6,12 @@
     "node": "16.14.0"
   },
   "scripts": {
-    "all-in": "npm run format && npm run lint && npm run test",
+    "all-in": "npm run format && npm run lint && npm run test:build && npm run test",
     "start": "DEBUG='-nodemon*,*' nodemon -r ./src/app.ts",
     "format": "prettier --write 'src/**/*.{js,ts}'",
     "lint": "eslint 'src/**/*'",
-    "test": "TS_NODE_PROJECT=tsconfig.test.json mocha --require ts-node/register/transpile-only --reporter dot --exit src/setup.spec.ts 'src/**/*.spec.ts'"
+    "test": "TS_NODE_PROJECT=tsconfig.test.json mocha --require ts-node/register/transpile-only --reporter dot --exit src/setup.spec.ts 'src/**/*.spec.ts'",
+    "test:build": "rm -rf dist && tsc"
   },
   "dependencies": {
     "@koa/cors": "3.1.0",
