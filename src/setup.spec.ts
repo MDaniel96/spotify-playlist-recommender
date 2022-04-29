@@ -10,7 +10,11 @@ use(chaiSubset);
 use(sinonChai);
 
 before(async () => {
-  await dbDataSource.initialize();
+  try {
+    await dbDataSource.initialize();
+  } catch (e) {
+    await dbDataSource.initialize();
+  }
 });
 
 afterEach(async () => {
