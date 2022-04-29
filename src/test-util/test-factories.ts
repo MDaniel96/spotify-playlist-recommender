@@ -1,6 +1,8 @@
 import * as Koa from 'koa';
 import { Preset } from '../types';
 import { randomUUID } from 'crypto';
+import { PresetEntity } from '../entity/preset.entity';
+import { dbDataSource } from '../config/db-data-source';
 
 type KoaContextRequest = {
   path: string;
@@ -28,6 +30,18 @@ export const createPreset = (additionalParams: Partial<Preset> = {}): Preset => 
   createdAt: new Date(),
   ...additionalParams
 });
+
+export const createPresetEntity = (additionalParams: Partial<PresetEntity> = {}): PresetEntity => {
+  const presetEntity = {
+    id: createRandomNumber(),
+    name: randomUUID(),
+    userId: createRandomNumber(),
+    createdAt: new Date(),
+    ...additionalParams
+  };
+  const repository = dbDataSource.getRepository(PresetEntity);
+  return repository.create(presetEntity);
+};
 
 export const createFakeContext = (additionalParams: Partial<KoaContext> = {}): Koa.Context =>
   ({
