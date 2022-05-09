@@ -7,10 +7,10 @@
   },
   "scripts": {
     "all-in": "npm run format && npm run lint && npm run test:build && npm run test",
-    "start": "DEBUG='-nodemon*,*' nodemon -r ./src/app.ts",
+    "start": "DEBUG='-nodemon*,*' nodemon -r dotenv/config ./src/app.ts",
     "format": "prettier --write 'src/**/*.{js,ts}'",
     "lint": "eslint 'src/**/*'",
-    "test": "TS_NODE_PROJECT=tsconfig.test.json mocha --require ts-node/register/transpile-only --reporter dot --exit src/setup.spec.ts 'src/**/*.spec.ts'",
+    "test": "TS_NODE_PROJECT=tsconfig.test.json mocha -r dotenv/config --require ts-node/register/transpile-only --reporter dot --exit src/setup.spec.ts 'src/**/*.spec.ts'",
     "test:build": "rm -rf dist && tsc"
   },
   "dependencies": {
@@ -46,6 +46,7 @@
     "chai": "4.3.6",
     "chai-subset": "1.6.0",
     "deep-equal-in-any-order": "1.1.15",
+    "dotenv": "16.0.0",
     "eslint": "8.10.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-json": "3.1.0",

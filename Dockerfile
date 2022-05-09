@@ -8,6 +8,6 @@ RUN npm install --production
 COPY src /app/src
 RUN npm run test:build
 
-EXPOSE 7777
+EXPOSE 3000
 CMD [ "node", "./dist/app.js" ]
 

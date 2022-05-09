@@ -1,0 +1,3 @@
+POSTGRES_DB_HOST=db
+POSTGRES_DB_PORT=5432
+POSTGRES_DB_ENTITIES=dist/entity/*.entity{.ts,.js}

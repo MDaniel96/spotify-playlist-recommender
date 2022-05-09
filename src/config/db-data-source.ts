@@ -1,15 +1,14 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 
-// TODO: get values from config
 export const dbDataSource = new DataSource({
   type: 'postgres',
-  host: 'localhost',
-  port: 5436,
-  username: 'postgres',
-  password: 'secret',
-  database: 'postgres',
-  entities: ['src/entity/*.entity.ts'],
-  synchronize: true,
-  logging: false
+  host: process.env.POSTGRES_DB_HOST,
+  port: Number(process.env.POSTGRES_DB_PORT),
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB_NAME,
+  entities: [process.env.POSTGRES_DB_ENTITIES || ''],
+  synchronize: process.env.POSTGRES_SYNCHRONIZE === 'true',
+  logging: process.env.POSTGRES_LOGGING === 'true'
 });

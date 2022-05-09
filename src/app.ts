@@ -20,5 +20,5 @@ app.use(router.allowedMethods());
 
 dbDataSource.initialize().catch(error => console.log(error));
 
-// TODO: get from config
-app.listen(3000, () => console.log('started'));
+const port = process.env.PORT;
+app.listen(port, () => console.log(`Listening on ${port}`));
