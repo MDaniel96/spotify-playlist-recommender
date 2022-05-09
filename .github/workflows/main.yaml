@@ -23,7 +23,7 @@ jobs:
         ports:
           - 5436:5432
     steps:
-      - name: Check out code
+      - name: Checkout
         uses: actions/checkout@v2
       - name: Determine Node version
         id: engines
@@ -33,11 +33,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ steps.engines.outputs.NODE_VERSION }}
-      - name: Install packages
-        run: npm ci
+      - name: Build
+        run: |
+          npm ci
+          npm run test:build
       - name: Lint
         run: npm run lint
-      - name: Build
-        run: npm run test:build
-      - name: Test
+      - name: Unit tests
         run: npm test
