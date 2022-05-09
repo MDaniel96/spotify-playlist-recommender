@@ -7,6 +7,17 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+env:
+  PORT: 3000
+  POSTGRES_DB_HOST: localhost
+  POSTGRES_DB_PORT: 5436
+  POSTGRES_DB_ENTITIES: src/entity/*.entity.ts
+  POSTGRES_DB_NAME: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: secret
+  POSTGRES_SYNCHRONIZE: true
+  POSTGRES_LOGGING: false
+
 jobs:
   test:
     runs-on: ubuntu-latest
