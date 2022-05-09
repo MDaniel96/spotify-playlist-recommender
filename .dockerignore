@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+docker-compose.yaml
+Dockerfile
+.dockerignore
+.git
+.gitignore
+.prettierrc
+.eslintrc.json
+.env
+.env.example
+.npmrc
