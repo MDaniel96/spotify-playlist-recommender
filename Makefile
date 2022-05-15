@@ -22,4 +22,4 @@ docker-build: ## Build image from Dockerfile
 	docker build -t spotify-playlist-recommender .
 
 docker-run: ## Run image from Dockerfile
-	docker run -p 8080:8080 -d spotify-playlist-recommender
+	docker run -p 8080:3000 -d spotify-playlist-recommender

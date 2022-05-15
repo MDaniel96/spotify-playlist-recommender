@@ -10,4 +10,3 @@ RUN npm run test:build
 
 EXPOSE 3000
 CMD [ "node", "./dist/app.js" ]
-
