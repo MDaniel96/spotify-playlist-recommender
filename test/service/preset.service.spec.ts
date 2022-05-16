@@ -1,9 +1,9 @@
-import { PresetService } from './preset.service';
-import { PresetRepository } from '../../repository/preset/preset.repository';
+import { PresetService } from '../../src/service/preset.service';
+import { PresetRepository } from '../../src/repository/preset.repository';
 import { stub } from 'sinon';
-import { createPresetEntity, createRandomNumber } from '../../test-util/test-factories';
+import { createPresetEntity, createRandomNumber } from '../test-util/test-factories.spec';
 import { expect } from 'chai';
-import { PresetMapper } from '../../mapper/preset.mapper';
+import { PresetMapper } from '../../src/mapper/preset.mapper';
 
 describe('PresetService', () => {
   context('#listByUserId', () => {

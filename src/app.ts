@@ -4,7 +4,7 @@ import * as cors from '@koa/cors';
 import * as logger from 'koa-logger';
 import { dbDataSource } from './config/db-data-source';
 import { useKoaServer } from 'routing-controllers';
-import { PresetController } from './controller/preset/preset.controller';
+import { PresetController } from './controller/preset.controller';
 
 export const app = new Koa();
 

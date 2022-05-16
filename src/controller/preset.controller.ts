@@ -1,6 +1,6 @@
-import { PresetService } from '../../service/preset/preset.service';
+import { PresetService } from '../service/preset.service';
 import { Controller, Get, Param } from 'routing-controllers';
-import { Preset } from '../../types';
+import { Preset } from '../types';
 
 @Controller()
 export class PresetController {

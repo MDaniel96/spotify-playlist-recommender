@@ -1,6 +1,6 @@
-import { PresetRepository } from '../../repository/preset/preset.repository';
-import { Preset } from '../../types';
-import { PresetMapper } from '../../mapper/preset.mapper';
+import { PresetRepository } from '../repository/preset.repository';
+import { Preset } from '../types';
+import { PresetMapper } from '../mapper/preset.mapper';
 
 export class PresetService {
   static create(): PresetService {
