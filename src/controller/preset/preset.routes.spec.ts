@@ -21,7 +21,7 @@ describe('Preset Routes', () => {
 
       expect(response).to.containSubset({
         status: 200,
-        body: { presets: JSON.parse(JSON.stringify(presets)) }
+        body: JSON.parse(JSON.stringify(presets))
       });
     });
   });

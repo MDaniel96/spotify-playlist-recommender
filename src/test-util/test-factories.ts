@@ -1,25 +1,7 @@
-import * as Koa from 'koa';
 import { Preset } from '../types';
 import { randomUUID } from 'crypto';
 import { PresetEntity } from '../entity/preset.entity';
 import { dbDataSource } from '../config/db-data-source';
-
-type KoaContextRequest = {
-  path: string;
-  body: unknown;
-  headers: Record<string, unknown>;
-};
-
-type KoaContextParams = {
-  userId?: number;
-};
-
-type KoaContext = {
-  request?: KoaContextRequest;
-  params?: KoaContextParams;
-  status?: unknown;
-  query?: unknown;
-};
 
 export const createRandomNumber = ({ max = 100000 } = {}): number => Math.floor(Math.random() * max) + 1;
 
@@ -42,9 +24,3 @@ export const createPresetEntity = (additionalParams: Partial<PresetEntity> = {})
   const repository = dbDataSource.getRepository(PresetEntity);
   return repository.create(presetEntity);
 };
-
-export const createFakeContext = (additionalParams: Partial<KoaContext> = {}): Koa.Context =>
-  ({
-    params: { userId: createRandomNumber() },
-    ...additionalParams
-  } as unknown as Koa.Context);
