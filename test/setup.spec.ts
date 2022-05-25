@@ -14,6 +14,7 @@ before(async () => {
     await dbDataSource.initialize();
   } catch (e) {
     await dbDataSource.initialize();
+    await dbDataSource.initialize();
   }
 });
 
