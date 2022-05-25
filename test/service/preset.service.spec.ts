@@ -1,7 +1,7 @@
 import { PresetService } from '../../src/service/preset.service';
 import { PresetRepository } from '../../src/repository/preset.repository';
 import { stub } from 'sinon';
-import { createPresetEntity, createRandomNumber } from '../test-util/test-factories.spec';
+import { createPresetEntity, createRandomNumber } from '../../src/test-util/test-factories';
 import { expect } from 'chai';
 import { PresetMapper } from '../../src/mapper/preset.mapper';
 

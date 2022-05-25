@@ -1,5 +1,5 @@
 import { PresetController } from '../../src/controller/preset.controller';
-import { createPreset, createRandomNumber } from '../test-util/test-factories.spec';
+import { createPreset, createRandomNumber } from '../../src/test-util/test-factories';
 import { expect } from 'chai';
 import { stub } from 'sinon';
 import { PresetService } from '../../src/service/preset.service';

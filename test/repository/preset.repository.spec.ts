@@ -1,5 +1,5 @@
 import { PresetRepository } from '../../src/repository/preset.repository';
-import { createPreset, createRandomNumber } from '../test-util/test-factories.spec';
+import { createPreset, createRandomNumber } from '../../src/test-util/test-factories';
 import { Preset } from '../../src/types';
 import { PresetEntity } from '../../src/entity/preset.entity';
 import { dbDataSource } from '../../src/config/db-data-source';
