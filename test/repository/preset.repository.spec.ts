@@ -17,7 +17,7 @@ describe('PresetRepository', () => {
       const userOtherPreset = await insertToDb(createPreset({ userId }));
       await insertToDb(createPreset({ userId: userId + 1 }));
 
-      const result = await PresetRepository.create().listByUserId(userId);
+      const result = await new PresetRepository().listByUserId(userId);
 
       expect(result).to.deep.equal([userPreset, userOtherPreset]);
     });
@@ -26,7 +26,7 @@ describe('PresetRepository', () => {
       const userId = createRandomNumber();
       await insertToDb(createPreset({ userId: userId + 1 }));
 
-      const result = await PresetRepository.create().listByUserId(userId);
+      const result = await new PresetRepository().listByUserId(userId);
 
       expect(result).to.deep.equal([]);
     });

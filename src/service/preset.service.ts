@@ -1,12 +1,10 @@
 import { PresetRepository } from '../repository/preset.repository';
 import { Preset } from '../types';
 import { PresetMapper } from '../mapper/preset.mapper';
+import { Service } from 'typedi';
 
+@Service()
 export class PresetService {
-  static create(): PresetService {
-    return new PresetService(PresetRepository.create());
-  }
-
   constructor(private presetRepository: PresetRepository) {}
 
   async listByUserId(userId: number): Promise<Preset[]> {

@@ -1,5 +1,5 @@
 import { PresetController } from '../../src/controller/preset.controller';
-import { createPreset, createRandomNumber } from '../../src/test-util/test-factories';
+import { createPreset, createPresetEntity, createRandomNumber } from '../../src/test-util/test-factories';
 import { expect } from 'chai';
 import { stub } from 'sinon';
 import { PresetService } from '../../src/service/preset.service';
@@ -13,20 +13,20 @@ describe('PresetController', () => {
     it('should give back presets', async () => {
       const userId = createRandomNumber();
       const presets = [createPreset(), createPreset()];
-      stub(PresetService.prototype, 'listByUserId').resolves(presets);
+      const presetService = createStubbedPresetService(presets);
 
-      const response = await new PresetController().listByUserId(userId);
+      const response = await new PresetController(presetService).listByUserId(userId);
 
       expect(response).to.eql(presets);
     });
 
     it('should call preset service method', async () => {
       const userId = createRandomNumber();
-      stub(PresetService.prototype, 'listByUserId');
+      const presetService = createStubbedPresetService();
 
-      await new PresetController().listByUserId(userId);
+      await new PresetController(presetService).listByUserId(userId);
 
-      expect(PresetService.prototype.listByUserId).to.have.been.calledWithExactly(userId);
+      expect(presetService.listByUserId).to.have.been.calledWithExactly(userId);
     });
   });
 
@@ -38,7 +38,7 @@ describe('PresetController', () => {
 
     context('list route', async () => {
       it('should list all presets of user', async () => {
-        const presets = [createPreset()];
+        const presets = [createPresetEntity()];
         stub(PresetRepository.prototype, 'listByUserId').resolves(presets);
 
         const response = await request(server).get('/api/preset/123');
@@ -51,3 +51,9 @@ describe('PresetController', () => {
     });
   });
 });
+
+function createStubbedPresetService(presets = [createPreset()]) {
+  const presetService = new PresetService(new PresetRepository());
+  stub(presetService, 'listByUserId').resolves(presets);
+  return presetService;
+}

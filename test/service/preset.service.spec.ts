@@ -8,7 +8,7 @@ import { PresetMapper } from '../../src/mapper/preset.mapper';
 describe('PresetService', () => {
   context('#listByUserId', () => {
     it('should list preset DTOs of given user', async () => {
-      const presetRepository = PresetRepository.create();
+      const presetRepository = new PresetRepository();
       const presetEntity = createPresetEntity();
       stub(presetRepository, 'listByUserId').resolves([presetEntity]);
       const preset = PresetMapper.toDTO(presetEntity);

@@ -3,7 +3,8 @@ import * as bodyParser from 'koa-bodyparser';
 import * as cors from '@koa/cors';
 import * as logger from 'koa-logger';
 import { dbDataSource } from './config/db-data-source';
-import { useKoaServer } from 'routing-controllers';
+import { useContainer, useKoaServer } from 'routing-controllers';
+import { Container } from 'typedi';
 import { PresetController } from './controller/preset.controller';
 
 export const app = new Koa();
@@ -12,6 +13,7 @@ app.use(bodyParser());
 app.use(cors());
 app.use(logger());
 
+useContainer(Container);
 useKoaServer(app, {
   routePrefix: '/api',
   controllers: [PresetController]
