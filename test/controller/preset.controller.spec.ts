@@ -7,6 +7,7 @@ import { Server } from 'http';
 import { app } from '../../src/app';
 import { PresetRepository } from '../../src/repository/preset.repository';
 import * as request from 'supertest';
+import { HttpStatus } from '../../src/lib/http-status';
 
 describe('PresetController', () => {
   context('#listByUserId', () => {
@@ -44,7 +45,7 @@ describe('PresetController', () => {
         const response = await request(server).get('/api/preset/123');
 
         expect(response).to.containSubset({
-          status: 200,
+          status: HttpStatus.OK,
           body: JSON.parse(JSON.stringify(presets))
         });
       });
