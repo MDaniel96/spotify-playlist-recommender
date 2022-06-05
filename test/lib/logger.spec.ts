@@ -9,7 +9,7 @@ describe('Logger', () => {
 
     Logger.create('name');
 
-    expect(pino).to.have.been.calledWithExactly({ name: 'name' });
+    expect(pino).to.have.been.calledWithExactly({ name: 'name', enabled: false });
   });
 
   it('should log info message with provided action name', () => {

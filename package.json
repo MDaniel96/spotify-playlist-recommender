@@ -10,7 +10,7 @@
     "start": "DEBUG='-nodemon*,*' nodemon -r dotenv/config ./src/app.ts",
     "format": "prettier --write 'src/**/*.{js,ts}'",
     "lint": "eslint 'src/**/*'",
-    "test": "TS_NODE_PROJECT=tsconfig.test.json mocha -r dotenv/config --require ts-node/register/transpile-only --reporter dot --exit test/setup.spec.ts 'test/**/*.spec.ts'",
+    "test": "TS_NODE_PROJECT=tsconfig.test.json NODE_ENV=test mocha -r dotenv/config --require ts-node/register/transpile-only --reporter dot --exit test/setup.spec.ts 'test/**/*.spec.ts'",
     "test:build": "rm -rf dist && tsc"
   },
   "dependencies": {

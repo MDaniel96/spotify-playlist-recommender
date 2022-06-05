@@ -1,8 +1,12 @@
 import pino, { BaseLogger } from 'pino';
 
 export class Logger {
-  static create(name: string): Logger {
-    const pinoLogger = pino({ name });
+  static create(namespace: string): Logger {
+    const isLoggingEnabled = process.env.NODE_ENV !== 'test';
+    const pinoLogger = pino({
+      name: namespace,
+      enabled: isLoggingEnabled
+    });
     return new Logger(pinoLogger);
   }
 
