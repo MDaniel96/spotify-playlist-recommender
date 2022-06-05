@@ -6,6 +6,7 @@ import { useContainer, useKoaServer } from 'routing-controllers';
 import { Container } from 'typedi';
 import { PresetController } from './controller/preset.controller';
 import { Logger } from './lib/logger';
+import { ErrorHandlerMiddleware } from './middleware/error-handler.middleware';
 
 const logger = Logger.create('app');
 
@@ -17,7 +18,9 @@ app.use(cors());
 useContainer(Container);
 useKoaServer(app, {
   routePrefix: '/api',
-  controllers: [PresetController]
+  controllers: [PresetController],
+  middlewares: [ErrorHandlerMiddleware],
+  defaultErrorHandler: false
 });
 
 dbDataSource.initialize().catch(error => logger.error('db-datasource-initialize-error', error));
