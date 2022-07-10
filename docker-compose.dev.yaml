@@ -3,9 +3,9 @@ version: '3.8'
 services:
   db:
     image: postgres:14.1-alpine
+    environment:
+      - POSTGRES_PASSWORD=secret
     restart: always
-    env_file:
-      - .env
     ports:
       - '5436:5432'
     volumes:

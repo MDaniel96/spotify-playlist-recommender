@@ -21,6 +21,7 @@ export class Logger {
   }
 
   error(action: string, attributes: Record<string, unknown> = {}): void {
+    // TODO: error attributes (or others are not logged)
     this.pinoLogger.error({ action, ...attributes });
   }
 }

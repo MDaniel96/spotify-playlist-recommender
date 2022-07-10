@@ -1,3 +1,7 @@
 {
-  "port": "PORT"
+  "port": "PORT",
+  "connectionOptions": {
+    "__name": "CONNECTION_OPTIONS",
+    "__format": "json"
+  }
 }
