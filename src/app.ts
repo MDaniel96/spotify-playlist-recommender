@@ -7,6 +7,7 @@ import { Container } from 'typedi';
 import { PresetController } from './controller/preset.controller';
 import { Logger } from './lib/logger';
 import { ErrorHandlerMiddleware } from './middleware/error-handler.middleware';
+import { config } from './config';
 
 const logger = Logger.create('app');
 
@@ -25,5 +26,5 @@ useKoaServer(app, {
 
 dbDataSource.initialize().catch(error => logger.error('db-datasource-initialize-error', error));
 
-const port = process.env.PORT;
+const port = config.port;
 app.listen(port, () => logger.info(`Listening on ${port}`));
