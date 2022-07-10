@@ -6,4 +6,5 @@ export const config: Config = require('config');
 type Config = {
   port: number;
   connectionOptions: PostgresConnectionOptions;
+  loggingEnabled: boolean;
 };

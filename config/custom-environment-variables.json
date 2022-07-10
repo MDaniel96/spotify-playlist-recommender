@@ -3,5 +3,6 @@
   "connectionOptions": {
     "__name": "CONNECTION_OPTIONS",
     "__format": "json"
-  }
+  },
+  "loggingEnabled": "LOGGING_ENABLED"
 }

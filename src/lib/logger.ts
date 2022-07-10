@@ -1,11 +1,11 @@
 import pino, { BaseLogger } from 'pino';
+import { config } from '../config';
 
 export class Logger {
   static create(namespace: string): Logger {
-    const isLoggingEnabled = process.env.NODE_ENV !== 'test';
     const pinoLogger = pino({
       name: namespace,
-      enabled: isLoggingEnabled
+      enabled: config.loggingEnabled
     });
     return new Logger(pinoLogger);
   }

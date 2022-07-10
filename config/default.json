@@ -10,5 +10,6 @@
     "entities": ["src/entity/*.entity.ts"],
     "synchronize": true,
     "logging": false
-  }
+  },
+  "loggingEnabled": true
 }
