@@ -4,6 +4,7 @@ import { Preset } from '../../src/types';
 import { PresetEntity } from '../../src/entity/preset.entity';
 import { dbDataSource } from '../../src/config/db-data-source';
 import { expect } from 'chai';
+import { randomUUID } from 'crypto';
 
 describe('PresetRepository', () => {
   beforeEach(async () => {
@@ -31,10 +32,43 @@ describe('PresetRepository', () => {
       expect(result).to.deep.equal([]);
     });
   });
+
+  context('#insert', () => {
+    it('should insert preset to the db', async () => {
+      const preset = { name: randomUUID(), userId: createRandomNumber(), createdAt: new Date() };
+
+      await new PresetRepository().insert(preset);
+
+      expect(await getFirstFromDb()).to.containSubset({
+        name: preset.name,
+        userId: preset.userId,
+        createdAt: preset.createdAt
+      });
+    });
+
+    it('should give back the inserted record', async () => {
+      const preset = { name: randomUUID(), userId: createRandomNumber(), createdAt: new Date() };
+
+      const result = await new PresetRepository().insert(preset);
+
+      const recordInDb = await getFirstFromDb();
+      expect(result).to.eql({
+        id: recordInDb!.id,
+        name: preset.name,
+        userId: preset.userId,
+        createdAt: preset.createdAt
+      });
+    });
+  });
 });
 
 async function insertToDb(preset: Preset): Promise<PresetEntity> {
   const repository = dbDataSource.getRepository(PresetEntity);
   const presetEntity = repository.create(preset);
   return await repository.save(presetEntity);
+}
+
+async function getFirstFromDb(): Promise<PresetEntity | null> {
+  const repository = dbDataSource.getRepository(PresetEntity);
+  return await repository.findOne({ where: {} });
 }

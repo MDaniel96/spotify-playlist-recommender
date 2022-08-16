@@ -1,5 +1,3 @@
-import * as Koa from 'koa';
-
 export type Preset = {
   id: number;
   name: string;
@@ -7,8 +5,4 @@ export type Preset = {
   createdAt: Date;
 };
 
-export type Route = {
-  method: 'get' | 'post' | 'put' | 'delete';
-  path: string;
-  action: <T extends Koa.Context>(context: T) => Promise<void>;
-};
+export type PresetInsertPayload = Omit<Preset, 'id' | 'createdAt'>;
