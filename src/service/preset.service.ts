@@ -12,6 +12,11 @@ export class PresetService {
     return PresetMapper.toDTOs(presets);
   }
 
+  async findById(presetId: number): Promise<Preset | null> {
+    const preset = await this.presetRepository.findById(presetId);
+    return preset ? PresetMapper.toDTO(preset) : null;
+  }
+
   async insert(presetPayload: PresetInsertPayload): Promise<Preset> {
     const preset = await this.presetRepository.insert({ ...presetPayload, createdAt: new Date() });
     return PresetMapper.toDTO(preset);

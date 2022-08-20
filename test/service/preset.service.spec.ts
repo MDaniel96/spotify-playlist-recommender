@@ -19,6 +19,38 @@ describe('PresetService', () => {
     });
   });
 
+  context('#findById', () => {
+    it('should call preset repository with correct id', async () => {
+      const presetId = createRandomNumber();
+      const presetRepository = new PresetRepository();
+      stub(presetRepository, 'findById').resolves();
+
+      await new PresetService(presetRepository).findById(presetId);
+
+      expect(presetRepository.findById).to.have.been.calledOnceWithExactly(presetId);
+    });
+
+    it('should give found preset DTO', async () => {
+      const presetRepository = new PresetRepository();
+      const presetEntity = createPresetEntity();
+      stub(presetRepository, 'findById').resolves(presetEntity);
+      const preset = PresetMapper.toDTO(presetEntity);
+
+      const result = await new PresetService(presetRepository).findById(createRandomNumber());
+
+      expect(result).to.deep.equal(preset);
+    });
+
+    it('should give null if preset is not found', async () => {
+      const presetRepository = new PresetRepository();
+      stub(presetRepository, 'findById').resolves(null);
+
+      const result = await new PresetService(presetRepository).findById(createRandomNumber());
+
+      expect(result).to.deep.equal(null);
+    });
+  });
+
   context('#insert', () => {
     it('should call preset repository with correct attributes', async () => {
       const presetPayload = createPresetInsertPayload();

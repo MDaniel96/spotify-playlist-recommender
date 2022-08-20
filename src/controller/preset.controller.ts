@@ -1,5 +1,5 @@
 import { PresetService } from '../service/preset.service';
-import { Body, Controller, Delete, Get, OnUndefined, Param, Post } from 'routing-controllers';
+import { Body, Controller, Delete, Get, NotFoundError, OnUndefined, Param, Post } from 'routing-controllers';
 import { Preset, PresetInsertPayload } from '../types';
 import { Service } from 'typedi';
 import { HttpStatus } from '../lib/http-status';
@@ -9,9 +9,18 @@ import { HttpStatus } from '../lib/http-status';
 export class PresetController {
   constructor(private presetService: PresetService) {}
 
-  @Get('/preset/:userId')
+  @Get('/preset/user/:userId')
   async listByUserId(@Param('userId') userId: number): Promise<Preset[]> {
     return await this.presetService.listByUserId(userId);
+  }
+
+  @Get('/preset/:id')
+  async findById(@Param('id') presetId: number): Promise<Preset> {
+    const preset = await this.presetService.findById(presetId);
+    if (!preset) {
+      throw new NotFoundError('Preset is not found');
+    }
+    return preset;
   }
 
   @Post('/preset')
