@@ -24,5 +24,13 @@
     "operator-linebreak": ["error", "after", { "overrides": { "?": "before", ":": "before" } }],
     "no-empty": ["error", { "allowEmptyCatch": true }],
     "max-len": ["error", { "code": 120, "ignorePattern": "^import [^,]+ from" }]
-  }
+  },
+  "overrides": [
+    {
+      "files": "**/*.spec.ts",
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
 }

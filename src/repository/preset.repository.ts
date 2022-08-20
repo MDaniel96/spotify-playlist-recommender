@@ -11,6 +11,10 @@ export class PresetRepository {
     return await this.repository.findBy({ userId });
   }
 
+  async findById(presetId: number): Promise<PresetEntity | null> {
+    return await this.repository.findOneBy({ id: presetId });
+  }
+
   async insert(preset: Omit<Preset, 'id'>): Promise<PresetEntity> {
     const presetEntity = this.repository.create(preset);
     return await this.repository.save(presetEntity);

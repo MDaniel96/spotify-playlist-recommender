@@ -33,6 +33,25 @@ describe('PresetRepository', () => {
     });
   });
 
+  context('#findById', () => {
+    it('should give back the correct preset', async () => {
+      const preset = await insertToDb(createPreset());
+      await Promise.all([insertToDb(createPreset()), insertToDb(createPreset())]);
+
+      const result = await new PresetRepository().findById(preset.id);
+
+      expect(result).to.deep.equal(preset);
+    });
+
+    it('should give back null if preset is not found', async () => {
+      await Promise.all([insertToDb(createPreset()), insertToDb(createPreset())]);
+
+      const result = await new PresetRepository().findById(createRandomNumber());
+
+      expect(result).to.be.null;
+    });
+  });
+
   context('#insert', () => {
     it('should insert preset to the db', async () => {
       const preset = { name: randomUUID(), userId: createRandomNumber(), createdAt: new Date() };
