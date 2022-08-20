@@ -13,7 +13,7 @@ export class ErrorHandlerMiddleware implements KoaMiddlewareInterface {
     try {
       await next();
     } catch (error: any) {
-      const status = error.statusCode || error.status || error.code || 500;
+      const status = error.statusCode || error.status || error.code || error.httpCode || 500;
       this.logError(error, status, context);
 
       context.status = status;

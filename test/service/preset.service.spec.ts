@@ -46,4 +46,16 @@ describe('PresetService', () => {
       expect(result).to.deep.equal(preset);
     });
   });
+
+  context('#delete', () => {
+    it('should call preset repository with preset id to delete', async () => {
+      const presetId = createRandomNumber();
+      const presetRepository = new PresetRepository();
+      stub(presetRepository, 'delete').resolves();
+
+      await new PresetService(presetRepository).delete(presetId);
+
+      expect(presetRepository.delete).to.have.been.calledOnceWithExactly(presetId);
+    });
+  });
 });

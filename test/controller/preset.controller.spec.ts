@@ -56,6 +56,17 @@ describe('PresetController', () => {
     });
   });
 
+  context('#delete', () => {
+    it('should call preset service delete method', async () => {
+      const presetService = createStubbedPresetService();
+      const presetId = createRandomNumber();
+
+      await new PresetController(presetService).delete(presetId);
+
+      expect(presetService.delete).to.have.been.calledOnceWithExactly(presetId);
+    });
+  });
+
   describe('Preset Routes', () => {
     let server: Server;
 
@@ -89,6 +100,18 @@ describe('PresetController', () => {
         });
       });
     });
+
+    context('delete route', async () => {
+      it('should delete the provided preset', async () => {
+        stub(PresetRepository.prototype, 'delete').resolves();
+
+        const response = await request(server).delete('/api/preset/123');
+
+        expect(response).to.containSubset({
+          status: HttpStatus.NO_CONTENT
+        });
+      });
+    });
   });
 });
 
@@ -96,5 +119,6 @@ function createStubbedPresetService({ presets = [createPreset()], insertedPreset
   const presetService = new PresetService(new PresetRepository());
   stub(presetService, 'listByUserId').resolves(presets);
   stub(presetService, 'insert').resolves(insertedPreset);
+  stub(presetService, 'delete').resolves();
   return presetService;
 }

@@ -15,4 +15,8 @@ export class PresetRepository {
     const presetEntity = this.repository.create(preset);
     return await this.repository.save(presetEntity);
   }
+
+  async delete(presetId: number): Promise<void> {
+    await this.repository.delete({ id: presetId });
+  }
 }

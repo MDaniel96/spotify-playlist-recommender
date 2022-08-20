@@ -60,6 +60,20 @@ describe('PresetRepository', () => {
       });
     });
   });
+
+  context('#delete', () => {
+    it('should remove preset from the db', async () => {
+      const [presetToDelete, presetNotToDelete] = await Promise.all([
+        insertToDb(createPreset()),
+        insertToDb(createPreset())
+      ]);
+
+      await new PresetRepository().delete(presetToDelete.id);
+
+      expect(await countRecordsInDb()).to.equal(1);
+      expect(await getFirstFromDb()).to.deep.equal(presetNotToDelete);
+    });
+  });
 });
 
 async function insertToDb(preset: Preset): Promise<PresetEntity> {
@@ -71,4 +85,9 @@ async function insertToDb(preset: Preset): Promise<PresetEntity> {
 async function getFirstFromDb(): Promise<PresetEntity | null> {
   const repository = dbDataSource.getRepository(PresetEntity);
   return await repository.findOne({ where: {} });
+}
+
+async function countRecordsInDb(): Promise<number> {
+  const repository = dbDataSource.getRepository(PresetEntity);
+  return await repository.count();
 }

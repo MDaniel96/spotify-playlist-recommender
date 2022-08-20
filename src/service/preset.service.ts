@@ -16,4 +16,8 @@ export class PresetService {
     const preset = await this.presetRepository.insert({ ...presetPayload, createdAt: new Date() });
     return PresetMapper.toDTO(preset);
   }
+
+  async delete(presetId: number): Promise<void> {
+    await this.presetRepository.delete(presetId);
+  }
 }
