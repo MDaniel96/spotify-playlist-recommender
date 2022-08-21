@@ -80,6 +80,46 @@ describe('PresetRepository', () => {
     });
   });
 
+  context('update', () => {
+    it('should update preset in db', async () => {
+      const oldPreset = await insertToDb(createPreset());
+      const newPreset = { name: 'new-name', userId: 2 };
+
+      await new PresetRepository().update(oldPreset.id, newPreset);
+
+      const recordInDb = await getFirstFromDb();
+      expect(recordInDb).to.deep.equal({ ...newPreset, id: oldPreset.id, createdAt: oldPreset.createdAt });
+    });
+
+    it('should return the updated preset', async () => {
+      const oldPreset = await insertToDb(createPreset());
+      const newPreset = { name: 'new-name', userId: 2 };
+
+      const result = await new PresetRepository().update(oldPreset.id, newPreset);
+
+      expect(result).to.deep.equal({ ...newPreset, id: oldPreset.id, createdAt: oldPreset.createdAt });
+    });
+
+    it('should return null if preset to update cannot be found', async () => {
+      await insertToDb(createPreset());
+      const newPreset = { name: 'new-name', userId: 2 };
+
+      const result = await new PresetRepository().update(createRandomNumber(), newPreset);
+
+      expect(result).to.be.null;
+    });
+
+    it('should not update the preset if another id is provided', async () => {
+      const oldPreset = await insertToDb(createPreset());
+      const newPreset = { name: 'new-name', userId: 2 };
+
+      await new PresetRepository().update(createRandomNumber(), newPreset);
+
+      const recordInDb = await getFirstFromDb();
+      expect(recordInDb).to.deep.equal(oldPreset);
+    });
+  });
+
   context('#delete', () => {
     it('should remove preset from the db', async () => {
       const [presetToDelete, presetNotToDelete] = await Promise.all([
