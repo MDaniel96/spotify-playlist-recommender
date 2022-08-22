@@ -11,7 +11,7 @@ describe('PresetRepository', () => {
     await dbDataSource.getRepository(PresetEntity).clear();
   });
 
-  context('#listByUserId', () => {
+  describe('#listByUserId', () => {
     it('should list presets of user', async () => {
       const userId = createRandomNumber();
       const userPreset = await insertToDb(createPreset({ userId }));
@@ -33,7 +33,7 @@ describe('PresetRepository', () => {
     });
   });
 
-  context('#findById', () => {
+  describe('#findById', () => {
     it('should give back the correct preset', async () => {
       const preset = await insertToDb(createPreset());
       await Promise.all([insertToDb(createPreset()), insertToDb(createPreset())]);
@@ -52,7 +52,7 @@ describe('PresetRepository', () => {
     });
   });
 
-  context('#insert', () => {
+  describe('#insert', () => {
     it('should insert preset to the db', async () => {
       const preset = { name: randomUUID(), userId: createRandomNumber(), createdAt: new Date() };
 
@@ -80,7 +80,7 @@ describe('PresetRepository', () => {
     });
   });
 
-  context('update', () => {
+  describe('#update', () => {
     it('should update preset in db', async () => {
       const oldPreset = await insertToDb(createPreset());
       const newPreset = { name: 'new-name', userId: 2 };
@@ -120,7 +120,7 @@ describe('PresetRepository', () => {
     });
   });
 
-  context('#delete', () => {
+  describe('#delete', () => {
     it('should remove preset from the db', async () => {
       const [presetToDelete, presetNotToDelete] = await Promise.all([
         insertToDb(createPreset()),

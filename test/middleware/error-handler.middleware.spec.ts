@@ -6,7 +6,7 @@ import { Logger } from '../../src/lib/logger';
 import { randomUUID } from 'crypto';
 
 describe('ErrorHandlerMiddleware', () => {
-  context('setting status code', () => {
+  describe('setting status code', () => {
     it('should set status code from error status', async () => {
       const status = 444;
       const next = async () => {
@@ -43,7 +43,7 @@ describe('ErrorHandlerMiddleware', () => {
     });
   });
 
-  context('logging', () => {
+  describe('logging', () => {
     it('should log error when status code is 500 or higher', async () => {
       const status = 500;
       const next = async () => {
@@ -81,7 +81,7 @@ describe('ErrorHandlerMiddleware', () => {
     });
   });
 
-  context('message', () => {
+  describe('message', () => {
     it('should set message from error', async () => {
       const errorMessage = randomUUID();
       const next = async () => {

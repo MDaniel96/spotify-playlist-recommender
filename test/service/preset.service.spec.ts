@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import { PresetMapper } from '../../src/mapper/preset.mapper';
 
 describe('PresetService', () => {
-  context('#listByUserId', () => {
+  describe('#listByUserId', () => {
     it('should list preset DTOs of given user', async () => {
       const presetRepository = new PresetRepository();
       const presetEntity = createPresetEntity();
@@ -19,7 +19,7 @@ describe('PresetService', () => {
     });
   });
 
-  context('#findById', () => {
+  describe('#findById', () => {
     it('should call preset repository with correct id', async () => {
       const presetId = createRandomNumber();
       const presetRepository = new PresetRepository();
@@ -51,7 +51,7 @@ describe('PresetService', () => {
     });
   });
 
-  context('#update', () => {
+  describe('#update', () => {
     it('should call preset repository with correct attributes', async () => {
       const presetId = createRandomNumber();
       const payload = { name: 'new-name', userId: 2 };
@@ -90,7 +90,7 @@ describe('PresetService', () => {
     });
   });
 
-  context('#insert', () => {
+  describe('#insert', () => {
     it('should call preset repository with correct attributes', async () => {
       const presetPayload = createPresetUpsertPayload();
       const presetRepository = new PresetRepository();
@@ -118,7 +118,7 @@ describe('PresetService', () => {
     });
   });
 
-  context('#delete', () => {
+  describe('#delete', () => {
     it('should call preset repository with preset id to delete', async () => {
       const presetId = createRandomNumber();
       const presetRepository = new PresetRepository();

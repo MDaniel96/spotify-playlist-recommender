@@ -16,7 +16,7 @@ import { HttpStatus } from '../../src/lib/http-status';
 import { NotFoundError } from 'routing-controllers';
 
 describe('PresetController', () => {
-  context('#listByUserId', () => {
+  describe('#listByUserId', () => {
     it('should give back presets', async () => {
       const userId = createRandomNumber();
       const presets = [createPreset(), createPreset()];
@@ -37,7 +37,7 @@ describe('PresetController', () => {
     });
   });
 
-  context('#findById', () => {
+  describe('#findById', () => {
     it('should give back found preset', async () => {
       const preset = createPreset();
       const presetService = createStubbedPresetService({ presets: [preset] });
@@ -66,7 +66,7 @@ describe('PresetController', () => {
     });
   });
 
-  context('#update', () => {
+  describe('#update', () => {
     it('should give back found preset', async () => {
       const preset = createPreset();
       const presetService = createStubbedPresetService({ presets: [preset] });
@@ -96,7 +96,7 @@ describe('PresetController', () => {
     });
   });
 
-  context('#insert', () => {
+  describe('#insert', () => {
     it('should give back created preset', async () => {
       const insertedPreset = createPreset();
       const presetService = createStubbedPresetService({ insertedPreset });
@@ -116,7 +116,7 @@ describe('PresetController', () => {
     });
   });
 
-  context('#delete', () => {
+  describe('#delete', () => {
     it('should call preset service delete method', async () => {
       const presetService = createStubbedPresetService();
       const presetId = createRandomNumber();
@@ -133,7 +133,7 @@ describe('PresetController', () => {
     beforeEach(() => (server = app.listen()));
     afterEach(() => server.close());
 
-    context('list by user route', async () => {
+    describe('list by user route', async () => {
       it('should list all presets of user', async () => {
         const presets = [createPresetEntity()];
         stub(PresetRepository.prototype, 'listByUserId').resolves(presets);
@@ -147,7 +147,7 @@ describe('PresetController', () => {
       });
     });
 
-    context('get by id route', async () => {
+    describe('get by id route', async () => {
       it('should return preset by id and status 200', async () => {
         const preset = createPresetEntity();
         stub(PresetRepository.prototype, 'findById').resolves(preset);
@@ -172,7 +172,7 @@ describe('PresetController', () => {
       });
     });
 
-    context('update route', async () => {
+    describe('update route', async () => {
       it('should return updated preset and status 200', async () => {
         const preset = createPresetEntity();
         stub(PresetRepository.prototype, 'update').resolves(preset);
@@ -197,7 +197,7 @@ describe('PresetController', () => {
       });
     });
 
-    context('insert route', async () => {
+    describe('insert route', async () => {
       it('should give inserted preset', async () => {
         const preset = createPreset();
         stub(PresetRepository.prototype, 'insert').resolves(preset);
@@ -211,7 +211,7 @@ describe('PresetController', () => {
       });
     });
 
-    context('delete route', async () => {
+    describe('delete route', async () => {
       it('should delete the provided preset', async () => {
         stub(PresetRepository.prototype, 'delete').resolves();
 
