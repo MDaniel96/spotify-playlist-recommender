@@ -1,5 +1,5 @@
 import * as Koa from 'koa';
-import { Preset, PresetUpsertPayload } from '../types';
+import { Preset, PresetUpsertPayload, User } from '../types';
 import { randomUUID } from 'crypto';
 import { PresetEntity } from '../entity/preset.entity';
 import { dbDataSource } from '../config/db-data-source';
@@ -63,3 +63,10 @@ export const createPresetEntity = (additionalParams: Partial<PresetEntity> = {})
   const repository = dbDataSource.getRepository(PresetEntity);
   return repository.create(presetEntity);
 };
+
+export const createUser = (additionalParams: Partial<User> = {}): User => ({
+  id: createRandomNumber(),
+  email: randomUUID(),
+  password: randomUUID(),
+  ...additionalParams
+});

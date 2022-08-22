@@ -6,3 +6,9 @@ export type Preset = {
 };
 
 export type PresetUpsertPayload = Omit<Preset, 'id' | 'createdAt'>;
+
+export type User = {
+  id: number;
+  email: string;
+  password: string;
+};
