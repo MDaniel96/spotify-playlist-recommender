@@ -2,7 +2,7 @@ import { PresetController } from '../../src/controller/preset.controller';
 import {
   createPreset,
   createPresetEntity,
-  createPresetInsertPayload,
+  createPresetUpsertPayload,
   createRandomNumber
 } from '../../src/test-util/test-factories';
 import { expect } from 'chai';
@@ -66,18 +66,48 @@ describe('PresetController', () => {
     });
   });
 
+  context('#update', () => {
+    it('should give back found preset', async () => {
+      const preset = createPreset();
+      const presetService = createStubbedPresetService({ presets: [preset] });
+
+      const response = await new PresetController(presetService).update(preset.id, { name: 'new-name', userId: 2 });
+
+      expect(response).to.eql(preset);
+    });
+
+    it('should throw error if preset is not found', async () => {
+      const presetService = new PresetService(new PresetRepository());
+      stub(presetService, 'update').resolves(null);
+
+      await expect(
+        new PresetController(presetService).update(createRandomNumber(), { name: 'new-name', userId: 2 })
+      ).to.be.rejectedWith(NotFoundError);
+    });
+
+    it('should call preset service method', async () => {
+      const presetId = createRandomNumber();
+      const payload = { name: 'new-name', userId: 2 };
+      const presetService = createStubbedPresetService();
+
+      await new PresetController(presetService).update(presetId, payload);
+
+      expect(presetService.update).to.have.been.calledWithExactly(presetId, payload);
+    });
+  });
+
   context('#insert', () => {
     it('should give back created preset', async () => {
       const insertedPreset = createPreset();
       const presetService = createStubbedPresetService({ insertedPreset });
 
-      const response = await new PresetController(presetService).insert(createPresetInsertPayload());
+      const response = await new PresetController(presetService).insert(createPresetUpsertPayload());
 
       expect(response).to.eql(insertedPreset);
     });
 
     it('should call preset service method', async () => {
-      const payload = createPresetInsertPayload();
+      const payload = createPresetUpsertPayload();
       const presetService = createStubbedPresetService();
 
       await new PresetController(presetService).insert(payload);
@@ -142,12 +172,37 @@ describe('PresetController', () => {
       });
     });
 
+    context('update route', async () => {
+      it('should return updated preset and status 200', async () => {
+        const preset = createPresetEntity();
+        stub(PresetRepository.prototype, 'update').resolves(preset);
+
+        const response = await request(server).put('/api/preset/123');
+
+        expect(response).to.containSubset({
+          status: HttpStatus.OK,
+          body: JSON.parse(JSON.stringify(preset))
+        });
+      });
+
+      it('should return status 404 if updated preset is not found', async () => {
+        stub(PresetRepository.prototype, 'update').resolves(null);
+
+        const response = await request(server).put('/api/preset/123');
+
+        expect(response).to.containSubset({
+          status: HttpStatus.NOT_FOUND,
+          body: JSON.parse(JSON.stringify({ message: 'Preset to update is not found' }))
+        });
+      });
+    });
+
     context('insert route', async () => {
       it('should give inserted preset', async () => {
         const preset = createPreset();
         stub(PresetRepository.prototype, 'insert').resolves(preset);
 
-        const response = await request(server).post('/api/preset').send(createPresetInsertPayload());
+        const response = await request(server).post('/api/preset').send(createPresetUpsertPayload());
 
         expect(response).to.containSubset({
           status: HttpStatus.OK,
@@ -174,6 +229,7 @@ function createStubbedPresetService({ presets = [createPreset()], insertedPreset
   const presetService = new PresetService(new PresetRepository());
   stub(presetService, 'listByUserId').resolves(presets);
   stub(presetService, 'findById').resolves(presets[0]);
+  stub(presetService, 'update').resolves(presets[0]);
   stub(presetService, 'insert').resolves(insertedPreset);
   stub(presetService, 'delete').resolves();
   return presetService;

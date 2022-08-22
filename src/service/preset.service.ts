@@ -1,5 +1,5 @@
 import { PresetRepository } from '../repository/preset.repository';
-import { Preset, PresetInsertPayload } from '../types';
+import { Preset, PresetUpsertPayload } from '../types';
 import { PresetMapper } from '../mapper/preset.mapper';
 import { Service } from 'typedi';
 
@@ -17,8 +17,13 @@ export class PresetService {
     return preset ? PresetMapper.toDTO(preset) : null;
   }
 
-  async insert(presetPayload: PresetInsertPayload): Promise<Preset> {
-    const preset = await this.presetRepository.insert({ ...presetPayload, createdAt: new Date() });
+  async update(presetId: number, payload: PresetUpsertPayload): Promise<Preset | null> {
+    const preset = await this.presetRepository.update(presetId, payload);
+    return preset ? PresetMapper.toDTO(preset) : null;
+  }
+
+  async insert(payload: PresetUpsertPayload): Promise<Preset> {
+    const preset = await this.presetRepository.insert({ ...payload, createdAt: new Date() });
     return PresetMapper.toDTO(preset);
   }
 

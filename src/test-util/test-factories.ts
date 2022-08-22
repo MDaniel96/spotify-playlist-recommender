@@ -1,5 +1,5 @@
 import * as Koa from 'koa';
-import { Preset, PresetInsertPayload } from '../types';
+import { Preset, PresetUpsertPayload } from '../types';
 import { randomUUID } from 'crypto';
 import { PresetEntity } from '../entity/preset.entity';
 import { dbDataSource } from '../config/db-data-source';
@@ -44,9 +44,9 @@ export const createPreset = (additionalParams: Partial<Preset> = {}): Preset => 
   ...additionalParams
 });
 
-export const createPresetInsertPayload = (
-  additionalParams: Partial<PresetInsertPayload> = {}
-): PresetInsertPayload => ({
+export const createPresetUpsertPayload = (
+  additionalParams: Partial<PresetUpsertPayload> = {}
+): PresetUpsertPayload => ({
   name: randomUUID(),
   userId: createRandomNumber(),
   ...additionalParams

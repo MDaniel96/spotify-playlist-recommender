@@ -5,4 +5,4 @@ export type Preset = {
   createdAt: Date;
 };
 
-export type PresetInsertPayload = Omit<Preset, 'id' | 'createdAt'>;
+export type PresetUpsertPayload = Omit<Preset, 'id' | 'createdAt'>;

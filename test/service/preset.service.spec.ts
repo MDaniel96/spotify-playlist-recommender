@@ -1,7 +1,7 @@
 import { PresetService } from '../../src/service/preset.service';
 import { PresetRepository } from '../../src/repository/preset.repository';
 import { stub, useFakeTimers } from 'sinon';
-import { createPresetEntity, createPresetInsertPayload, createRandomNumber } from '../../src/test-util/test-factories';
+import { createPresetEntity, createPresetUpsertPayload, createRandomNumber } from '../../src/test-util/test-factories';
 import { expect } from 'chai';
 import { PresetMapper } from '../../src/mapper/preset.mapper';
 
@@ -51,9 +51,48 @@ describe('PresetService', () => {
     });
   });
 
+  context('#update', () => {
+    it('should call preset repository with correct attributes', async () => {
+      const presetId = createRandomNumber();
+      const payload = { name: 'new-name', userId: 2 };
+      const presetRepository = new PresetRepository();
+      stub(presetRepository, 'update').resolves();
+
+      await new PresetService(presetRepository).update(presetId, payload);
+
+      expect(presetRepository.update).to.have.been.calledOnceWithExactly(presetId, payload);
+    });
+
+    it('should give the updated preset DTO', async () => {
+      const presetEntity = createPresetEntity();
+      const presetRepository = new PresetRepository();
+      stub(presetRepository, 'update').resolves(presetEntity);
+      const preset = PresetMapper.toDTO(presetEntity);
+
+      const result = await new PresetService(presetRepository).update(createRandomNumber(), {
+        name: 'new-name',
+        userId: 2
+      });
+
+      expect(result).to.deep.equal(preset);
+    });
+
+    it('should give null if preset is not found', async () => {
+      const presetRepository = new PresetRepository();
+      stub(presetRepository, 'update').resolves(null);
+
+      const result = await new PresetService(presetRepository).update(createRandomNumber(), {
+        name: 'new-name',
+        userId: 2
+      });
+
+      expect(result).to.be.null;
+    });
+  });
+
   context('#insert', () => {
     it('should call preset repository with correct attributes', async () => {
-      const presetPayload = createPresetInsertPayload();
+      const presetPayload = createPresetUpsertPayload();
       const presetRepository = new PresetRepository();
       stub(presetRepository, 'insert').resolves(createPresetEntity());
       const today = new Date();
@@ -73,7 +112,7 @@ describe('PresetService', () => {
       stub(presetRepository, 'insert').resolves(presetEntity);
       const preset = PresetMapper.toDTO(presetEntity);
 
-      const result = await new PresetService(presetRepository).insert(createPresetInsertPayload());
+      const result = await new PresetService(presetRepository).insert(createPresetUpsertPayload());
 
       expect(result).to.deep.equal(preset);
     });

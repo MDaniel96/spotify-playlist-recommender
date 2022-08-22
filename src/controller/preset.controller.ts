@@ -1,6 +1,6 @@
 import { PresetService } from '../service/preset.service';
-import { Body, Controller, Delete, Get, NotFoundError, OnUndefined, Param, Post } from 'routing-controllers';
-import { Preset, PresetInsertPayload } from '../types';
+import { Body, Controller, Delete, Get, NotFoundError, OnUndefined, Param, Post, Put } from 'routing-controllers';
+import { Preset, PresetUpsertPayload } from '../types';
 import { Service } from 'typedi';
 import { HttpStatus } from '../lib/http-status';
 
@@ -23,9 +23,18 @@ export class PresetController {
     return preset;
   }
 
+  @Put('/preset/:id')
+  async update(@Param('id') presetId: number, @Body() payload: PresetUpsertPayload): Promise<Preset> {
+    const preset = await this.presetService.update(presetId, payload);
+    if (!preset) {
+      throw new NotFoundError('Preset to update is not found');
+    }
+    return preset;
+  }
+
   @Post('/preset')
-  async insert(@Body() presetPayload: PresetInsertPayload): Promise<Preset> {
-    return await this.presetService.insert(presetPayload);
+  async insert(@Body() payload: PresetUpsertPayload): Promise<Preset> {
+    return await this.presetService.insert(payload);
   }
 
   @Delete('/preset/:id')

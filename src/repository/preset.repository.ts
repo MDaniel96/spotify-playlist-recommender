@@ -1,7 +1,7 @@
 import { PresetEntity } from '../entity/preset.entity';
 import { dbDataSource } from '../config/db-data-source';
 import { Service } from 'typedi';
-import { Preset } from '../types';
+import { Preset, PresetUpsertPayload } from '../types';
 
 @Service()
 export class PresetRepository {
@@ -15,7 +15,7 @@ export class PresetRepository {
     return await this.repository.findOneBy({ id: presetId });
   }
 
-  async update(presetId: number, payload: Omit<Preset, 'id' | 'createdAt'>): Promise<PresetEntity | null> {
+  async update(presetId: number, payload: PresetUpsertPayload): Promise<PresetEntity | null> {
     await this.repository.update({ id: presetId }, payload);
     return await this.repository.findOneBy({ id: presetId });
   }
