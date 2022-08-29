@@ -4,10 +4,11 @@ import { createRandomNumber, createUser } from '../../src/test-util/test-factori
 import { expect } from 'chai';
 import { UserRepository } from '../../src/repository/user.repository';
 import { User } from '../../src/types';
+import { clearUserTable } from '../../src/test-util/db';
 
 describe('UserRepository', () => {
   beforeEach(async () => {
-    await dbDataSource.getRepository(UserEntity).clear();
+    await clearUserTable();
   });
 
   describe('#findById', () => {

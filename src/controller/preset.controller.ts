@@ -32,9 +32,9 @@ export class PresetController {
     return preset;
   }
 
-  @Post('/preset')
-  async insert(@Body() payload: PresetUpsertPayload): Promise<Preset> {
-    return await this.presetService.insert(payload);
+  @Post('/preset/user/:userId')
+  async insert(@Param('userId') userId: number, @Body() payload: PresetUpsertPayload): Promise<Preset> {
+    return await this.presetService.insert(payload, userId);
   }
 
   @Delete('/preset/:id')

@@ -1,11 +1,11 @@
 export type Preset = {
   id: number;
   name: string;
-  userId: number;
+  user: User;
   createdAt: Date;
 };
 
-export type PresetUpsertPayload = Omit<Preset, 'id' | 'createdAt'>;
+export type PresetUpsertPayload = Omit<Preset, 'id' | 'user' | 'createdAt'>;
 
 export type User = {
   id: number;

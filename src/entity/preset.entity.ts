@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { UserEntity } from './user.entity';
 
 @Entity({ name: 'preset' })
 export class PresetEntity {
@@ -8,8 +9,8 @@ export class PresetEntity {
   @Column()
   name!: string;
 
-  @Column({ name: 'user_id' })
-  userId!: number;
+  @ManyToOne(() => UserEntity, user => user.presets)
+  user!: UserEntity;
 
   @Column({ name: 'created_at' })
   createdAt!: Date;

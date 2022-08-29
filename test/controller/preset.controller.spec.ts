@@ -3,7 +3,8 @@ import {
   createPreset,
   createPresetEntity,
   createPresetUpsertPayload,
-  createRandomNumber
+  createRandomNumber,
+  createUserEntity
 } from '../../src/test-util/test-factories';
 import { expect } from 'chai';
 import { stub } from 'sinon';
@@ -14,6 +15,7 @@ import { PresetRepository } from '../../src/repository/preset.repository';
 import * as request from 'supertest';
 import { HttpStatus } from '../../src/lib/http-status';
 import { NotFoundError } from 'routing-controllers';
+import { UserRepository } from '../../src/repository/user.repository';
 
 describe('PresetController', () => {
   describe('#listByUserId', () => {
@@ -48,7 +50,7 @@ describe('PresetController', () => {
     });
 
     it('should throw error if preset is not found', async () => {
-      const presetService = new PresetService(new PresetRepository());
+      const presetService = new PresetService(new PresetRepository(), new UserRepository());
       stub(presetService, 'findById').resolves(null);
 
       await expect(new PresetController(presetService).findById(createRandomNumber())).to.be.rejectedWith(
@@ -71,17 +73,17 @@ describe('PresetController', () => {
       const preset = createPreset();
       const presetService = createStubbedPresetService({ presets: [preset] });
 
-      const response = await new PresetController(presetService).update(preset.id, { name: 'new-name', userId: 2 });
+      const response = await new PresetController(presetService).update(preset.id, { name: 'new-name' });
 
       expect(response).to.eql(preset);
     });
 
     it('should throw error if preset is not found', async () => {
-      const presetService = new PresetService(new PresetRepository());
+      const presetService = new PresetService(new PresetRepository(), new UserRepository());
       stub(presetService, 'update').resolves(null);
 
       await expect(
-        new PresetController(presetService).update(createRandomNumber(), { name: 'new-name', userId: 2 })
+        new PresetController(presetService).update(createRandomNumber(), { name: 'new-name' })
       ).to.be.rejectedWith(NotFoundError);
     });
 
@@ -101,18 +103,22 @@ describe('PresetController', () => {
       const insertedPreset = createPreset();
       const presetService = createStubbedPresetService({ insertedPreset });
 
-      const response = await new PresetController(presetService).insert(createPresetUpsertPayload());
+      const response = await new PresetController(presetService).insert(
+        createRandomNumber(),
+        createPresetUpsertPayload()
+      );
 
       expect(response).to.eql(insertedPreset);
     });
 
     it('should call preset service method', async () => {
+      const userId = createRandomNumber();
       const payload = createPresetUpsertPayload();
       const presetService = createStubbedPresetService();
 
-      await new PresetController(presetService).insert(payload);
+      await new PresetController(presetService).insert(userId, payload);
 
-      expect(presetService.insert).to.have.been.calledOnceWithExactly(payload);
+      expect(presetService.insert).to.have.been.calledOnceWithExactly(payload, userId);
     });
   });
 
@@ -135,7 +141,7 @@ describe('PresetController', () => {
 
     describe('list by user route', async () => {
       it('should list all presets of user', async () => {
-        const presets = [createPresetEntity()];
+        const presets = [createPresetEntity({ user: createUserEntity() })];
         stub(PresetRepository.prototype, 'listByUserId').resolves(presets);
 
         const response = await request(server).get('/api/preset/user/123');
@@ -149,7 +155,7 @@ describe('PresetController', () => {
 
     describe('get by id route', async () => {
       it('should return preset by id and status 200', async () => {
-        const preset = createPresetEntity();
+        const preset = createPresetEntity({ user: createUserEntity() });
         stub(PresetRepository.prototype, 'findById').resolves(preset);
 
         const response = await request(server).get('/api/preset/123');
@@ -174,7 +180,7 @@ describe('PresetController', () => {
 
     describe('update route', async () => {
       it('should return updated preset and status 200', async () => {
-        const preset = createPresetEntity();
+        const preset = createPresetEntity({ user: createUserEntity() });
         stub(PresetRepository.prototype, 'update').resolves(preset);
 
         const response = await request(server).put('/api/preset/123');
@@ -199,10 +205,10 @@ describe('PresetController', () => {
 
     describe('insert route', async () => {
       it('should give inserted preset', async () => {
-        const preset = createPreset();
+        const preset = createPresetEntity({ user: createUserEntity() });
         stub(PresetRepository.prototype, 'insert').resolves(preset);
 
-        const response = await request(server).post('/api/preset').send(createPresetUpsertPayload());
+        const response = await request(server).post('/api/preset/user/123').send(createPresetUpsertPayload());
 
         expect(response).to.containSubset({
           status: HttpStatus.OK,
@@ -226,7 +232,7 @@ describe('PresetController', () => {
 });
 
 function createStubbedPresetService({ presets = [createPreset()], insertedPreset = createPreset() } = {}) {
-  const presetService = new PresetService(new PresetRepository());
+  const presetService = new PresetService(new PresetRepository(), new UserRepository());
   stub(presetService, 'listByUserId').resolves(presets);
   stub(presetService, 'findById').resolves(presets[0]);
   stub(presetService, 'update').resolves(presets[0]);

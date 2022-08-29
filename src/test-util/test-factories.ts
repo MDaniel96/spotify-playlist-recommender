@@ -3,6 +3,7 @@ import { Preset, PresetUpsertPayload, User } from '../types';
 import { randomUUID } from 'crypto';
 import { PresetEntity } from '../entity/preset.entity';
 import { dbDataSource } from '../config/db-data-source';
+import { UserEntity } from '../entity/user.entity';
 
 export const createRandomNumber = ({ max = 100000 } = {}): number => Math.floor(Math.random() * max) + 1;
 
@@ -39,7 +40,7 @@ export const createFakeContext = (additionalParams: Partial<KoaContext> = {}): K
 export const createPreset = (additionalParams: Partial<Preset> = {}): Preset => ({
   id: createRandomNumber(),
   name: randomUUID(),
-  userId: createRandomNumber(),
+  user: createUser(),
   createdAt: new Date(),
   ...additionalParams
 });
@@ -48,7 +49,6 @@ export const createPresetUpsertPayload = (
   additionalParams: Partial<PresetUpsertPayload> = {}
 ): PresetUpsertPayload => ({
   name: randomUUID(),
-  userId: createRandomNumber(),
   ...additionalParams
 });
 
@@ -56,7 +56,7 @@ export const createPresetEntity = (additionalParams: Partial<PresetEntity> = {})
   const presetEntity = {
     id: createRandomNumber(),
     name: randomUUID(),
-    userId: createRandomNumber(),
+    user: undefined,
     createdAt: new Date(),
     ...additionalParams
   };
@@ -70,3 +70,14 @@ export const createUser = (additionalParams: Partial<User> = {}): User => ({
   password: randomUUID(),
   ...additionalParams
 });
+
+export const createUserEntity = (additionalParams: Partial<UserEntity> = {}): UserEntity => {
+  const userEntity = {
+    id: createRandomNumber(),
+    email: randomUUID(),
+    password: randomUUID(),
+    ...additionalParams
+  };
+  const repository = dbDataSource.getRepository(UserEntity);
+  return repository.create(userEntity);
+};

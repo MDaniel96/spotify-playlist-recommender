@@ -2,10 +2,11 @@ import { PresetRepository } from '../repository/preset.repository';
 import { Preset, PresetUpsertPayload } from '../types';
 import { PresetMapper } from '../mapper/preset.mapper';
 import { Service } from 'typedi';
+import { UserRepository } from '../repository/user.repository';
 
 @Service()
 export class PresetService {
-  constructor(private presetRepository: PresetRepository) {}
+  constructor(private presetRepository: PresetRepository, private userRepository: UserRepository) {}
 
   async listByUserId(userId: number): Promise<Preset[]> {
     const presets = await this.presetRepository.listByUserId(userId);
@@ -22,8 +23,9 @@ export class PresetService {
     return preset ? PresetMapper.toDTO(preset) : null;
   }
 
-  async insert(payload: PresetUpsertPayload): Promise<Preset> {
-    const preset = await this.presetRepository.insert({ ...payload, createdAt: new Date() });
+  async insert(payload: PresetUpsertPayload, userId: number): Promise<Preset> {
+    const user = (await this.userRepository.findById(userId))!;
+    const preset = await this.presetRepository.insert({ ...payload, user, createdAt: new Date() });
     return PresetMapper.toDTO(preset);
   }
 
